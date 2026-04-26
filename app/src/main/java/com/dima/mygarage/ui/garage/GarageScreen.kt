@@ -19,11 +19,8 @@ import com.dima.mygarage.model.Car
 
 @Composable
 fun GarageRoute(
-    viewModel: GarageViewModel,
     modifier: Modifier = Modifier
 ) {
-    val cars by viewModel.cars.collectAsState()
-
     GarageScreen(
         cars = cars,
         modifier = modifier
