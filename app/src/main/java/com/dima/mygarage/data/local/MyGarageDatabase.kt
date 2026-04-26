@@ -16,7 +16,7 @@ import com.dima.mygarage.data.local.entity.CarEntity
     version = 1,
     exportSchema = true
 )
-@TypeConverters(AppConverters::class)
+//@TypeConverters(AppConverters::class)
 abstract class MyGarageDatabase : RoomDatabase() {
 
     abstract fun carDao(): CarDao

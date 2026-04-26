@@ -22,7 +22,7 @@ fun GarageRoute(
     modifier: Modifier = Modifier
 ) {
     GarageScreen(
-        cars = cars,
+        cars = emptyList(),
         modifier = modifier
     )
 }
