@@ -8,15 +8,19 @@ import androidx.room.TypeConverters
 import com.dima.mygarage.data.local.converter.AppConverters
 import com.dima.mygarage.data.local.dao.CarDao
 import com.dima.mygarage.data.local.entity.CarEntity
+import com.dima.mygarage.data.local.entity.ExpenseCategoryEntity
+import com.dima.mygarage.data.local.entity.ExpenseEntity
 
 @Database(
     entities = [
         CarEntity::class,
+        ExpenseEntity::class,
+        ExpenseCategoryEntity::class
     ],
     version = 1,
     exportSchema = true
 )
-//@TypeConverters(AppConverters::class)
+@TypeConverters(AppConverters::class)
 abstract class MyGarageDatabase : RoomDatabase() {
 
     abstract fun carDao(): CarDao
@@ -24,7 +28,6 @@ abstract class MyGarageDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: MyGarageDatabase? = null
-
         fun getInstance(context: Context): MyGarageDatabase {
             return INSTANCE ?: synchronized(this) {
                 INSTANCE ?: Room.databaseBuilder(
