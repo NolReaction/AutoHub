@@ -1,4 +1,4 @@
-package com.dima.mygarage.ui.garage
+package com.dima.mygarage.ui.garage.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

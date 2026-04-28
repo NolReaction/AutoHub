@@ -41,7 +41,9 @@ class GarageViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(GarageViewModel::class.java)) {
-            return GarageViewModel(repository) as T
+            return GarageViewModel(
+                repository
+                ) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel class")

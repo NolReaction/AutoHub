@@ -1,4 +1,4 @@
-package com.dima.mygarage.ui.garage
+package com.dima.mygarage.ui.garage.components
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text

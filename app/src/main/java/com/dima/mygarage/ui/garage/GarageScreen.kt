@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dima.mygarage.model.Car
+import com.dima.mygarage.ui.garage.components.CarCard
+import com.dima.mygarage.ui.garage.components.CarDetailsDialog
 
 @Composable
 fun GarageRoute(
