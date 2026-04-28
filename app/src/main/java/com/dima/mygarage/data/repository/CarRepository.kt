@@ -6,8 +6,9 @@ import com.dima.mygarage.model.Car
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.math.BigDecimal
+import javax.inject.Inject
 
-class CarRepository(private val carDao: CarDao) {
+class CarRepository @Inject constructor(private val carDao: CarDao) {
     fun observeCars(): Flow<List<Car>> {
         return carDao.observeCars().map { entities ->
                 entities.map { it.toCar() }

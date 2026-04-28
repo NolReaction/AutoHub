@@ -15,14 +15,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.dima.mygarage.model.Car
 import com.dima.mygarage.ui.garage.components.CarCard
 import com.dima.mygarage.ui.garage.components.CarDetailsDialog
 
 @Composable
 fun GarageRoute(
-    viewModel: GarageViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: GarageViewModel = hiltViewModel()
 ) {
     val cars by viewModel.cars.collectAsState()
 
