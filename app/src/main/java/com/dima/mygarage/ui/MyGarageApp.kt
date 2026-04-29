@@ -13,28 +13,28 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.dima.mygarage.R
 import com.dima.mygarage.ui.garage.GarageRoute
+import com.dima.mygarage.ui.garage.add.AddCarRoute
 import com.dima.mygarage.ui.menu.MenuScreen
+import com.dima.mygarage.ui.navigation.AppRoute
 import com.dima.mygarage.ui.theme.MyGarageTheme
-
-private enum class MainTab {
-    Garage,
-    Menu
-}
 
 @Composable
 fun MyGarageApp(
     appViewModel: AppViewModel = hiltViewModel()
 ) {
     val settings by appViewModel.settings.collectAsState()
-    var selectedTab by rememberSaveable { mutableStateOf(MainTab.Garage) }
+    val navController = rememberNavController()
 
     MyGarageTheme(
         darkTheme = settings.isDarkTheme
@@ -42,11 +42,22 @@ fun MyGarageApp(
         Scaffold(
             containerColor = MaterialTheme.colorScheme.background,
             bottomBar = {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+
                 NavigationBar {
                     NavigationBarItem(
-                        selected = selectedTab == MainTab.Garage,
+                        selected = currentDestination?.hierarchy?.any {
+                            it.route == AppRoute.Garage.route
+                        } == true,
                         onClick = {
-                            selectedTab = MainTab.Garage
+                            navController.navigate(AppRoute.Garage.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         icon = {
                             Icon(
@@ -60,9 +71,17 @@ fun MyGarageApp(
                     )
 
                     NavigationBarItem(
-                        selected = selectedTab == MainTab.Menu,
+                        selected = currentDestination?.hierarchy?.any {
+                            it.route == AppRoute.Menu.route
+                        } == true,
                         onClick = {
-                            selectedTab = MainTab.Menu
+                            navController.navigate(AppRoute.Menu.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         icon = {
                             Icon(
@@ -77,18 +96,31 @@ fun MyGarageApp(
                 }
             }
         ) { innerPadding ->
-            when (selectedTab) {
-                MainTab.Garage -> {
+            NavHost(
+                navController = navController,
+                startDestination = AppRoute.Garage.route,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable(AppRoute.Garage.route) {
                     GarageRoute(
-                        modifier = Modifier.padding(innerPadding)
+                        onAddCarClick = {
+                            navController.navigate(AppRoute.AddCar.route)
+                        }
                     )
                 }
 
-                MainTab.Menu -> {
+                composable(AppRoute.AddCar.route) {
+                    AddCarRoute(
+                        onBack = {
+                            navController.popBackStack()
+                        }
+                    )
+                }
+
+                composable(AppRoute.Menu.route) {
                     MenuScreen(
                         isDarkTheme = settings.isDarkTheme,
-                        onDarkThemeChange = appViewModel::setDarkTheme,
-                        modifier = Modifier.padding(innerPadding)
+                        onDarkThemeChange = appViewModel::setDarkTheme
                     )
                 }
             }

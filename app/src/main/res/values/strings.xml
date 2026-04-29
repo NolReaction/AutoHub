@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">MyGarage</string>
+    <string name="app_name" translatable="false">MyGarage</string>
 
     <string name="tab_garage">Garage</string>
     <string name="tab_menu">Menu</string>
 
-    <string name="garage_title">MyGarage</string>
+    <string name="garage_title">Garage</string>
 
     <plurals name="cars_in_garage">
         <item quantity="one">%1$d car in garage</item>
@@ -28,4 +28,11 @@
     <string name="unknown">Unknown</string>
     <string name="no_details">No details</string>
     <string name="favorite">Favorite</string>
+
+    <string name="add_car">Add car</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="brand_and_model_required">Brand and model are required</string>
 </resources>

@@ -1,14 +1,20 @@
 package com.dima.mygarage.ui.garage
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -34,6 +41,7 @@ import java.math.BigDecimal
 
 @Composable
 fun GarageRoute(
+    onAddCarClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: GarageViewModel = hiltViewModel()
 ) {
@@ -41,6 +49,7 @@ fun GarageRoute(
 
     GarageScreen(
         cars = cars,
+        onAddCarClick = onAddCarClick,
         modifier = modifier
     )
 }
@@ -48,6 +57,7 @@ fun GarageRoute(
 @Composable
 fun GarageScreen(
     cars: List<Car>,
+    onAddCarClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var selectedCar by remember { mutableStateOf<Car?>(null) }
@@ -56,42 +66,58 @@ fun GarageScreen(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(
-                start = 16.dp,
-                top = 20.dp,
-                end = 16.dp,
-                bottom = 24.dp
-            ),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            item {
-                GarageHeader(
-                    carsCount = cars.size
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    top = 20.dp,
+                    end = 16.dp,
+                    bottom = 96.dp
+                ),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                item {
+                    GarageHeader(
+                        carsCount = cars.size
+                    )
+                }
+
+                items(
+                    items = cars,
+                    key = { car -> car.id }
+                ) { car ->
+                    CarCard(
+                        car = car,
+                        onClick = {
+                            selectedCar = car
+                        }
+                    )
+                }
+            }
+
+            FloatingActionButton(
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(16.dp),
+                onClick = onAddCarClick
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Add,
+                    contentDescription = stringResource(R.string.add_car)
                 )
             }
 
-            items(
-                items = cars,
-                key = { car -> car.id }
-            ) { car ->
-                CarCard(
+            selectedCar?.let { car ->
+                CarDetailsDialog(
                     car = car,
-                    onClick = {
-                        selectedCar = car
+                    onDismiss = {
+                        selectedCar = null
                     }
                 )
             }
-        }
-
-        selectedCar?.let { car ->
-            CarDetailsDialog(
-                car = car,
-                onDismiss = {
-                    selectedCar = null
-                }
-            )
         }
     }
 }
@@ -147,7 +173,8 @@ fun GarageScreenPreview() {
                     price = BigDecimal("6500000"),
                     isFavorite = false
                 )
-            )
+            ),
+            onAddCarClick = {}
         )
     }
 }
