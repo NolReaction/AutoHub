@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">MyGarage</string>
+
+    <string name="tab_garage">Гараж</string>
+    <string name="tab_menu">Меню</string>
+
+    <string name="garage_title">MyGarage</string>
+
+    <plurals name="cars_in_garage">
+        <item quantity="one">%1$d машина в гараже</item>
+        <item quantity="few">%1$d машины в гараже</item>
+        <item quantity="many">%1$d машин в гараже</item>
+        <item quantity="other">%1$d машины в гараже</item>
+    </plurals>
+
+    <string name="menu_title">Меню</string>
+    <string name="dark_theme_title">Тёмная тема</string>
+    <string name="dark_theme_subtitle">Переключить внешний вид приложения</string>
+
+    <string name="language_title">Язык</string>
+    <string name="language_subtitle">Выбери язык интерфейса</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+
+    <string name="close">Закрыть</string>
+    <string name="year">Год</string>
+    <string name="horsepower">Мощность</string>
+    <string name="horsepower_short">л.с.</string>
+    <string name="price">Цена</string>
+    <string name="unknown">Неизвестно</string>
+    <string name="no_details">Нет данных</string>
+    <string name="favorite">Избранное</string>
+</resources>

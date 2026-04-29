@@ -1,21 +1,25 @@
 package com.dima.mygarage.ui
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DirectionsCar
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.DirectionsCar
-import androidx.compose.material.icons.outlined.Menu
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.dima.mygarage.R
 import com.dima.mygarage.ui.garage.GarageRoute
 import com.dima.mygarage.ui.menu.MenuScreen
 import com.dima.mygarage.ui.theme.MyGarageTheme
@@ -26,12 +30,14 @@ private enum class MainTab {
 }
 
 @Composable
-fun MyGarageApp() {
-    var isDarkTheme by rememberSaveable { mutableStateOf(false) }
+fun MyGarageApp(
+    appViewModel: AppViewModel = hiltViewModel()
+) {
+    val settings by appViewModel.settings.collectAsState()
     var selectedTab by rememberSaveable { mutableStateOf(MainTab.Garage) }
 
     MyGarageTheme(
-        darkTheme = isDarkTheme
+        darkTheme = settings.isDarkTheme
     ) {
         Scaffold(
             containerColor = MaterialTheme.colorScheme.background,
@@ -45,11 +51,11 @@ fun MyGarageApp() {
                         icon = {
                             Icon(
                                 imageVector = Icons.Outlined.DirectionsCar,
-                                contentDescription = "Garage"
+                                contentDescription = stringResource(R.string.tab_garage)
                             )
                         },
                         label = {
-                            Text("Garage")
+                            Text(stringResource(R.string.tab_garage))
                         }
                     )
 
@@ -61,11 +67,11 @@ fun MyGarageApp() {
                         icon = {
                             Icon(
                                 imageVector = Icons.Outlined.Menu,
-                                contentDescription = "Menu"
+                                contentDescription = stringResource(R.string.tab_menu)
                             )
                         },
                         label = {
-                            Text("Menu")
+                            Text(stringResource(R.string.tab_menu))
                         }
                     )
                 }
@@ -80,10 +86,8 @@ fun MyGarageApp() {
 
                 MainTab.Menu -> {
                     MenuScreen(
-                        isDarkTheme = isDarkTheme,
-                        onDarkThemeChange = {
-                            isDarkTheme = it
-                        },
+                        isDarkTheme = settings.isDarkTheme,
+                        onDarkThemeChange = appViewModel::setDarkTheme,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

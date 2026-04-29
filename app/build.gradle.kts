@@ -37,8 +37,13 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
         isCoreLibraryDesugaringEnabled = true
     }
+
     buildFeatures {
         compose = true
+    }
+
+    androidResources {
+        generateLocaleConfig = true
     }
 }
 
@@ -76,4 +81,10 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    // Для локализации
+    implementation(libs.androidx.appcompat)
+
+    // Preferences DataStore
+    implementation(libs.androidx.datastore.preferences)
 }

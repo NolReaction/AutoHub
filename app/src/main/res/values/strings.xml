@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">MyGarage</string>
+
+    <string name="tab_garage">Garage</string>
+    <string name="tab_menu">Menu</string>
+
+    <string name="garage_title">MyGarage</string>
+
+    <plurals name="cars_in_garage">
+        <item quantity="one">%1$d car in garage</item>
+        <item quantity="other">%1$d cars in garage</item>
+    </plurals>
+
+    <string name="menu_title">Menu</string>
+    <string name="dark_theme_title">Dark theme</string>
+    <string name="dark_theme_subtitle">Switch app appearance</string>
+
+    <string name="language_title">Language</string>
+    <string name="language_subtitle">Choose app language</string>
+    <string name="language_english">English</string>
+    <string name="language_russian">Русский</string>
+
+    <string name="close">Close</string>
+    <string name="year">Year</string>
+    <string name="horsepower">Horsepower</string>
+    <string name="horsepower_short">hp</string>
+    <string name="price">Price</string>
+    <string name="unknown">Unknown</string>
+    <string name="no_details">No details</string>
+    <string name="favorite">Favorite</string>
 </resources>

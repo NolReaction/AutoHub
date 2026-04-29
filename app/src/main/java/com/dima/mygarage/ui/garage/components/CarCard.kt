@@ -17,9 +17,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.dima.mygarage.R
 import com.dima.mygarage.model.Car
 import com.dima.mygarage.ui.common.formatter.formatRubPrice
 import com.dima.mygarage.ui.theme.MyGarageTheme
@@ -30,6 +32,9 @@ fun CarCard(
     car: Car,
     onClick: () -> Unit
 ) {
+    val horsepowerShort = stringResource(R.string.horsepower_short)
+    val noDetails = stringResource(R.string.no_details)
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(20.dp),
@@ -69,7 +74,11 @@ fun CarCard(
                         )
 
                         Text(
-                            text = buildCarSubtitle(car),
+                            text = buildCarSubtitle(
+                                car = car,
+                                horsepowerShort = horsepowerShort,
+                                noDetails = noDetails
+                            ),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.65f)
                         )
@@ -79,7 +88,7 @@ fun CarCard(
                 if (car.isFavorite) {
                     Icon(
                         imageVector = Icons.Outlined.Star,
-                        contentDescription = "Favorite",
+                        contentDescription = stringResource(R.string.favorite),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -97,14 +106,18 @@ fun CarCard(
     }
 }
 
-private fun buildCarSubtitle(car: Car): String {
+private fun buildCarSubtitle(
+    car: Car,
+    horsepowerShort: String,
+    noDetails: String
+): String {
     val parts = buildList {
         car.year?.let { add(it.toString()) }
-        car.horsepower?.let { add("$it hp") }
+        car.horsepower?.let { add("$it $horsepowerShort") }
     }
 
     return if (parts.isEmpty()) {
-        "No details"
+        noDetails
     } else {
         parts.joinToString(separator = " • ")
     }
