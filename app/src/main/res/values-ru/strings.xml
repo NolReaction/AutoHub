@@ -36,4 +36,14 @@
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>
     <string name="brand_and_model_required">Марка и модель обязательны</string>
+
+    <string name="add_to_favorites">Добавить в избранное</string>
+    <string name="remove_from_favorites">Убрать из избранного</string>
+
+    <string name="delete">Удалить</string>
+    <string name="delete_car">Удалить машину</string>
+
+    <string name="delete_confirmation_title">Удалить эту машину?</string>
+    <string name="delete_confirmation_text">Данные о машине, расходах, заправках и обслуживании нельзя будет восстановить.</string>
+    <string name="confirm_delete">Удалить</string>
 </resources>

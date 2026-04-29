@@ -5,6 +5,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import com.dima.mygarage.R
 import com.dima.mygarage.model.Car
@@ -13,8 +17,11 @@ import com.dima.mygarage.ui.common.formatter.formatRubPrice
 @Composable
 fun CarDetailsDialog(
     car: Car,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onDelete: () -> Unit
 ) {
+    var showDeleteConfirmation by remember { mutableStateOf(false) }
+
     val unknown = stringResource(R.string.unknown)
     val yearLabel = stringResource(R.string.year)
     val horsepowerLabel = stringResource(R.string.horsepower)
@@ -48,8 +55,62 @@ fun CarDetailsDialog(
             ) {
                 Text(stringResource(R.string.close))
             }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    showDeleteConfirmation = true
+                }
+            ) {
+                Text(
+                    text = stringResource(R.string.delete),
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         }
     )
+
+    if (showDeleteConfirmation) {
+        AlertDialog(
+            onDismissRequest = {
+                showDeleteConfirmation = false
+            },
+            title = {
+                Text(
+                    text = stringResource(R.string.delete_confirmation_title),
+                    style = MaterialTheme.typography.headlineSmall
+                )
+            },
+            text = {
+                Text(
+                    text = stringResource(R.string.delete_confirmation_text),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteConfirmation = false
+                        onDelete()
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.confirm_delete),
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        showDeleteConfirmation = false
+                    }
+                ) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        )
+    }
 }
 
 private fun buildCarDetailsText(

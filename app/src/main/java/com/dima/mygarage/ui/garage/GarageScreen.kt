@@ -50,6 +50,8 @@ fun GarageRoute(
     GarageScreen(
         cars = cars,
         onAddCarClick = onAddCarClick,
+        onFavoriteClick = viewModel::toggleFavorite,
+        onDeleteCar = viewModel::deleteCar,
         modifier = modifier
     )
 }
@@ -58,6 +60,8 @@ fun GarageRoute(
 fun GarageScreen(
     cars: List<Car>,
     onAddCarClick: () -> Unit,
+    onFavoriteClick: (Car) -> Unit,
+    onDeleteCar: (Car) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var selectedCar by remember { mutableStateOf<Car?>(null) }
@@ -93,6 +97,9 @@ fun GarageScreen(
                         car = car,
                         onClick = {
                             selectedCar = car
+                        },
+                        onFavoriteClick = {
+                            onFavoriteClick(car)
                         }
                     )
                 }
@@ -114,6 +121,10 @@ fun GarageScreen(
                 CarDetailsDialog(
                     car = car,
                     onDismiss = {
+                        selectedCar = null
+                    },
+                    onDelete = {
+                        onDeleteCar(car)
                         selectedCar = null
                     }
                 )
@@ -174,7 +185,9 @@ fun GarageScreenPreview() {
                     isFavorite = false
                 )
             ),
-            onAddCarClick = {}
+            onAddCarClick = {},
+            onFavoriteClick = {},
+            onDeleteCar = {}
         )
     }
 }

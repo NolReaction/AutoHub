@@ -34,4 +34,19 @@ class GarageViewModel @Inject constructor(
             carRepository.insertCar(car)
         }
     }
+
+    fun deleteCar(car: Car) {
+        viewModelScope.launch {
+            carRepository.deleteCarById(car.id)
+        }
+    }
+
+    fun toggleFavorite(car: Car) {
+        viewModelScope.launch {
+            carRepository.setCarFavorite(
+                carId = car.id,
+                isFavorite = !car.isFavorite
+            )
+        }
+    }
 }

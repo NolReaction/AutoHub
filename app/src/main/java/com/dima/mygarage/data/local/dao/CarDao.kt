@@ -29,6 +29,12 @@ interface CarDao {
     @Update
     suspend fun updateCar(car: CarEntity)
 
+    @Query("UPDATE cars SET is_favorite = :isFavorite WHERE id = :carId")
+    suspend fun updateFavoriteStatus(
+        carId: Int,
+        isFavorite: Boolean
+    )
+
     @Query("DELETE FROM cars WHERE id = :id")
     suspend fun deleteCarById(id: Int)
 }

@@ -35,4 +35,14 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="brand_and_model_required">Brand and model are required</string>
+
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+
+    <string name="delete">Delete</string>
+    <string name="delete_car">Delete car</string>
+
+    <string name="delete_confirmation_title">Delete this car?</string>
+    <string name="delete_confirmation_text">Car data, expenses, fuel records and service history cannot be restored.</string>
+    <string name="confirm_delete">Delete</string>
 </resources>

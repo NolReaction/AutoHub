@@ -21,6 +21,8 @@ data class CarEntity(
     @ColumnInfo(name = "engine_type")
     val engineType: String? = null,
 
+    val horsepower: Int? = null,
+
     val year: Int? = null,
     val mileage: Int? = null,
 

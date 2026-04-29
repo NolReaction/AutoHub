@@ -9,9 +9,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DirectionsCar
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +32,8 @@ import java.math.BigDecimal
 @Composable
 fun CarCard(
     car: Car,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onFavoriteClick: () -> Unit
 ) {
     val horsepowerShort = stringResource(R.string.horsepower_short)
     val noDetails = stringResource(R.string.no_details)
@@ -85,11 +88,25 @@ fun CarCard(
                     }
                 }
 
-                if (car.isFavorite) {
+                IconButton(
+                    onClick = onFavoriteClick
+                ) {
                     Icon(
-                        imageVector = Icons.Outlined.Star,
-                        contentDescription = stringResource(R.string.favorite),
-                        tint = MaterialTheme.colorScheme.primary
+                        imageVector = if (car.isFavorite) {
+                            Icons.Outlined.Star
+                        } else {
+                            Icons.Outlined.StarBorder
+                        },
+                        contentDescription = if (car.isFavorite) {
+                            stringResource(R.string.remove_from_favorites)
+                        } else {
+                            stringResource(R.string.add_to_favorites)
+                        },
+                        tint = if (car.isFavorite) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.45f)
+                        }
                     )
                 }
             }
@@ -137,7 +154,8 @@ fun CarCardPreview() {
                 price = BigDecimal("7000000"),
                 isFavorite = true
             ),
-            onClick = {}
+            onClick = {},
+            onFavoriteClick = {}
         )
     }
 }
@@ -158,7 +176,8 @@ fun CarCardDarkPreview() {
                 price = BigDecimal("7000000"),
                 isFavorite = true
             ),
-            onClick = {}
+            onClick = {},
+            onFavoriteClick = {}
         )
     }
 }

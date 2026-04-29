@@ -19,6 +19,20 @@ class CarRepository @Inject constructor(private val carDao: CarDao) {
         return carDao.insertCar(car.toEntity())
     }
 
+    suspend fun setCarFavorite(
+        carId: Int,
+        isFavorite: Boolean
+    ) {
+        carDao.updateFavoriteStatus(
+            carId = carId,
+            isFavorite = isFavorite
+        )
+    }
+
+    suspend fun deleteCarById(id: Int) {
+        carDao.deleteCarById(id)
+    }
+
     suspend fun seedCarsIfEmpty() {
         val carCount = carDao.getCarsCount()
 
@@ -56,7 +70,7 @@ private fun CarEntity.toCar(): Car {
         brand = brand,
         model = model,
         year = year,
-        horsepower = null,
+        horsepower = horsepower,
         price = priceRub?.let { BigDecimal(it) },
         isFavorite = isFavorite,
         image = null
@@ -69,6 +83,7 @@ private fun Car.toEntity(): CarEntity {
         brand = brand,
         model = model,
         year = year,
+        horsepower = horsepower,
         priceRub = price?.toInt(),
         isFavorite = isFavorite
     )
