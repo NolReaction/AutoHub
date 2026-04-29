@@ -33,6 +33,10 @@ class CarRepository @Inject constructor(private val carDao: CarDao) {
         carDao.deleteCarById(id)
     }
 
+    suspend fun updateCar(car: Car) {
+        carDao.updateCar(car.toEntity())
+    }
+
     suspend fun seedCarsIfEmpty() {
         val carCount = carDao.getCarsCount()
 

@@ -46,4 +46,8 @@
     <string name="delete_confirmation_title">Удалить эту машину?</string>
     <string name="delete_confirmation_text">Данные о машине, расходах, заправках и обслуживании нельзя будет восстановить.</string>
     <string name="confirm_delete">Удалить</string>
+
+    <string name="edit">Редактировать</string>
+    <string name="edit_car">Редактировать машину</string>
+    <string name="car_not_found">Машина не найдена</string>
 </resources>

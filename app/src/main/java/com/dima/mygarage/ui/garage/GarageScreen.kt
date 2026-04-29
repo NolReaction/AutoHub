@@ -42,6 +42,7 @@ import java.math.BigDecimal
 @Composable
 fun GarageRoute(
     onAddCarClick: () -> Unit,
+    onEditCarClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: GarageViewModel = hiltViewModel()
 ) {
@@ -50,6 +51,7 @@ fun GarageRoute(
     GarageScreen(
         cars = cars,
         onAddCarClick = onAddCarClick,
+        onEditCarClick = onEditCarClick,
         onFavoriteClick = viewModel::toggleFavorite,
         onDeleteCar = viewModel::deleteCar,
         modifier = modifier
@@ -60,6 +62,7 @@ fun GarageRoute(
 fun GarageScreen(
     cars: List<Car>,
     onAddCarClick: () -> Unit,
+    onEditCarClick: (Int) -> Unit,
     onFavoriteClick: (Car) -> Unit,
     onDeleteCar: (Car) -> Unit,
     modifier: Modifier = Modifier
@@ -122,6 +125,10 @@ fun GarageScreen(
                     car = car,
                     onDismiss = {
                         selectedCar = null
+                    },
+                    onEdit = {
+                        selectedCar = null
+                        onEditCarClick(car.id)
                     },
                     onDelete = {
                         onDeleteCar(car)
@@ -186,6 +193,7 @@ fun GarageScreenPreview() {
                 )
             ),
             onAddCarClick = {},
+            onEditCarClick = {},
             onFavoriteClick = {},
             onDeleteCar = {}
         )

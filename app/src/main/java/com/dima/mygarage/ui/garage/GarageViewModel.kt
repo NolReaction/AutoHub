@@ -35,6 +35,12 @@ class GarageViewModel @Inject constructor(
         }
     }
 
+    fun updateCar(car: Car) {
+        viewModelScope.launch {
+            carRepository.updateCar(car)
+        }
+    }
+
     fun deleteCar(car: Car) {
         viewModelScope.launch {
             carRepository.deleteCarById(car.id)

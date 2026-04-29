@@ -45,4 +45,8 @@
     <string name="delete_confirmation_title">Delete this car?</string>
     <string name="delete_confirmation_text">Car data, expenses, fuel records and service history cannot be restored.</string>
     <string name="confirm_delete">Delete</string>
+
+    <string name="edit">Edit</string>
+    <string name="edit_car">Edit car</string>
+    <string name="car_not_found">Car not found</string>
 </resources>

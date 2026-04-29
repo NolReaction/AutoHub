@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,6 +23,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +48,8 @@ fun AddCarRoute(
     viewModel: GarageViewModel = hiltViewModel()
 ) {
     AddCarScreen(
+        title = stringResource(R.string.add_car),
+        initialCar = null,
         modifier = modifier,
         onBack = onBack,
         onSaveCar = { car ->
@@ -56,7 +60,59 @@ fun AddCarRoute(
 }
 
 @Composable
+fun EditCarRoute(
+    carId: Int,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: GarageViewModel = hiltViewModel()
+) {
+    val cars by viewModel.cars.collectAsState()
+    val car = cars.firstOrNull { it.id == carId }
+
+    if (car == null) {
+        Surface(
+            modifier = modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.car_not_found),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
+                )
+
+                OutlinedButton(
+                    onClick = onBack
+                ) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        }
+
+        return
+    }
+
+    AddCarScreen(
+        title = stringResource(R.string.edit_car),
+        initialCar = car,
+        modifier = modifier,
+        onBack = onBack,
+        onSaveCar = { updatedCar ->
+            viewModel.updateCar(updatedCar)
+            onBack()
+        }
+    )
+}
+
+@Composable
 fun AddCarScreen(
+    title: String,
+    initialCar: Car?,
     onBack: () -> Unit,
     onSaveCar: (Car) -> Unit,
     modifier: Modifier = Modifier
@@ -65,12 +121,31 @@ fun AddCarScreen(
         onBack()
     }
 
-    var brand by rememberSaveable { mutableStateOf("") }
-    var model by rememberSaveable { mutableStateOf("") }
-    var year by rememberSaveable { mutableStateOf("") }
-    var horsepower by rememberSaveable { mutableStateOf("") }
-    var price by rememberSaveable { mutableStateOf("") }
-    var isFavorite by rememberSaveable { mutableStateOf(false) }
+    val formKey = initialCar?.id ?: 0
+
+    var brand by rememberSaveable(formKey) {
+        mutableStateOf(initialCar?.brand.orEmpty())
+    }
+
+    var model by rememberSaveable(formKey) {
+        mutableStateOf(initialCar?.model.orEmpty())
+    }
+
+    var year by rememberSaveable(formKey) {
+        mutableStateOf(initialCar?.year?.toString().orEmpty())
+    }
+
+    var horsepower by rememberSaveable(formKey) {
+        mutableStateOf(initialCar?.horsepower?.toString().orEmpty())
+    }
+
+    var price by rememberSaveable(formKey) {
+        mutableStateOf(initialCar?.price?.toPlainString().orEmpty())
+    }
+
+    var isFavorite by rememberSaveable(formKey) {
+        mutableStateOf(initialCar?.isFavorite ?: false)
+    }
 
     var showRequiredError by remember { mutableStateOf(false) }
 
@@ -100,7 +175,7 @@ fun AddCarScreen(
                 }
 
                 Text(
-                    text = stringResource(R.string.add_car),
+                    text = title,
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -219,13 +294,14 @@ fun AddCarScreen(
                         }
 
                         val car = Car(
-                            id = 0,
+                            id = initialCar?.id ?: 0,
                             brand = brand.trim(),
                             model = model.trim(),
                             year = year.toIntOrNull(),
                             horsepower = horsepower.toIntOrNull(),
                             price = price.toBigDecimalOrNullSafe(),
-                            isFavorite = isFavorite
+                            isFavorite = isFavorite,
+                            image = initialCar?.image
                         )
 
                         onSaveCar(car)

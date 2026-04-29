@@ -18,13 +18,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.dima.mygarage.R
 import com.dima.mygarage.ui.garage.GarageRoute
 import com.dima.mygarage.ui.garage.add.AddCarRoute
+import com.dima.mygarage.ui.garage.add.EditCarRoute
 import com.dima.mygarage.ui.menu.MenuScreen
 import com.dima.mygarage.ui.navigation.AppRoute
 import com.dima.mygarage.ui.theme.MyGarageTheme
@@ -105,6 +108,9 @@ fun MyGarageApp(
                     GarageRoute(
                         onAddCarClick = {
                             navController.navigate(AppRoute.AddCar.route)
+                        },
+                        onEditCarClick = { carId ->
+                            navController.navigate(AppRoute.EditCar.createRoute(carId))
                         }
                     )
                 }
@@ -115,6 +121,26 @@ fun MyGarageApp(
                             navController.popBackStack()
                         }
                     )
+                }
+
+                composable(
+                    route = AppRoute.EditCar.route,
+                    arguments = listOf(
+                        navArgument(AppRoute.EditCar.CAR_ID_ARG) {
+                            type = NavType.IntType
+                        }
+                    )
+                ) { backStackEntry ->
+                    val carId = backStackEntry.arguments?.getInt(AppRoute.EditCar.CAR_ID_ARG)
+
+                    if (carId != null) {
+                        EditCarRoute(
+                            carId = carId,
+                            onBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
                 }
 
                 composable(AppRoute.Menu.route) {
