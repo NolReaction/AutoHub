@@ -9,3 +9,15 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
+
+val GarageBlue = Color(0xFF2563EB)
+val GarageBlueDark = Color(0xFF7DB7FF)
+
+val GarageLightBackground = Color(0xFFF6F8FB)
+val GarageDarkBackground = Color(0xFF0F1115)
+
+val GarageLightSurface = Color(0xFFFFFFFF)
+val GarageDarkSurface = Color(0xFF181B22)
+
+val GarageLightText = Color(0xFF111827)
+val GarageDarkText = Color(0xFFE5E7EB)
