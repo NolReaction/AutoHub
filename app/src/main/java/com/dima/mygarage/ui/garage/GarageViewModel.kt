@@ -13,10 +13,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GarageViewModel @Inject constructor(
-    private val repository: CarRepository
+    private val carRepository: CarRepository
 ) : ViewModel() {
 
-    val cars: StateFlow<List<Car>> = repository.observeCars()
+    val cars: StateFlow<List<Car>> = carRepository.observeCars()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -25,7 +25,13 @@ class GarageViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.seedCarsIfEmpty()
+            carRepository.seedCarsIfEmpty()
+        }
+    }
+
+    fun addCar(car: Car) {
+        viewModelScope.launch {
+            carRepository.insertCar(car)
         }
     }
 }

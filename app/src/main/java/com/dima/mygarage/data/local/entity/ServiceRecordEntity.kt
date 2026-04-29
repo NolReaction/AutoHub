@@ -5,44 +5,37 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Entity(
-    tableName = "expenses",
+    tableName = "service_records",
     foreignKeys = [
         ForeignKey(
             entity = CarEntity::class,
             parentColumns = ["id"],
             childColumns = ["car_id"],
             onDelete = ForeignKey.CASCADE
-        ),
-        ForeignKey(
-            entity = ExpenseCategoryEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["category_id"],
-            onDelete = ForeignKey.RESTRICT
         )
     ],
     indices = [
-        Index(value = ["car_id"]),
-        Index(value = ["category_id"])
+        Index(value = ["car_id"])
     ]
 )
-data class ExpenseEntity(
+data class ServiceRecordEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
     @ColumnInfo(name = "car_id")
     val carId: Int,
 
-    val title: String,
+    val date: LocalDateTime,
+
+    val mileage: Int? = null,
+
+    val title: String? = null,
 
     @ColumnInfo(name = "price_rub")
-    val priceRub: BigDecimal,
+    val priceRub: Int,
 
-    @ColumnInfo(name = "category_id")
-    val categoryId: Int,
-
-    val date: LocalDateTime
+    val note: String? = null
 )

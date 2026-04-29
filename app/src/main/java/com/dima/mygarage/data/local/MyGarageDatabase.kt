@@ -8,16 +8,25 @@ import androidx.room.TypeConverters
 import com.dima.mygarage.data.local.converter.AppConverters
 import com.dima.mygarage.data.local.dao.CarDao
 import com.dima.mygarage.data.local.dao.ExpenseCategoryDao
-import com.dima.mygarage.data.local.dao.ExpensesDao
+import com.dima.mygarage.data.local.dao.ExpenseDao
+import com.dima.mygarage.data.local.dao.FuelRecordDao
+import com.dima.mygarage.data.local.dao.FuelTypeDao
+import com.dima.mygarage.data.local.dao.ServiceRecordDao
 import com.dima.mygarage.data.local.entity.CarEntity
 import com.dima.mygarage.data.local.entity.ExpenseCategoryEntity
 import com.dima.mygarage.data.local.entity.ExpenseEntity
+import com.dima.mygarage.data.local.entity.FuelRecordEntity
+import com.dima.mygarage.data.local.entity.FuelTypeEntity
+import com.dima.mygarage.data.local.entity.ServiceRecordEntity
 
 @Database(
     entities = [
         CarEntity::class,
+        ExpenseCategoryEntity::class,
         ExpenseEntity::class,
-        ExpenseCategoryEntity::class
+        FuelTypeEntity::class,
+        FuelRecordEntity::class,
+        ServiceRecordEntity::class
     ],
     version = 1,
     exportSchema = true
@@ -26,8 +35,11 @@ import com.dima.mygarage.data.local.entity.ExpenseEntity
 abstract class MyGarageDatabase : RoomDatabase() {
 
     abstract fun carDao(): CarDao
-    abstract fun expensesDao(): ExpensesDao
+    abstract fun expenseDao(): ExpenseDao
     abstract fun expenseCategoryDao(): ExpenseCategoryDao
+    abstract fun fuelTypeDao(): FuelTypeDao
+    abstract fun fuelRecordDao(): FuelRecordDao
+    abstract fun serviceRecordDao(): ServiceRecordDao
 
     companion object {
         @Volatile

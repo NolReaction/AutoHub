@@ -14,11 +14,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.dima.mygarage.model.Car
 import com.dima.mygarage.ui.garage.components.CarCard
 import com.dima.mygarage.ui.garage.components.CarDetailsDialog
+import com.dima.mygarage.ui.theme.MyGarageTheme
+import java.math.BigDecimal
 
 @Composable
 fun GarageRoute(
@@ -69,6 +72,35 @@ fun GarageScreen(
             onDismiss = {
                 selectedCar = null
             }
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Composable
+fun GarageScreenPreview() {
+    MyGarageTheme {
+        GarageScreen(
+            cars = listOf(
+                Car(
+                    id = 1,
+                    brand = "BMW",
+                    model = "M340i",
+                    year = 2019,
+                    horsepower = 387,
+                    price = BigDecimal("7000000"),
+                    isFavorite = true
+                ),
+                Car(
+                    id = 2,
+                    brand = "Toyota",
+                    model = "Supra",
+                    year = 2021,
+                    horsepower = 387,
+                    price = BigDecimal("6500000"),
+                    isFavorite = false
+                )
+            )
         )
     }
 }

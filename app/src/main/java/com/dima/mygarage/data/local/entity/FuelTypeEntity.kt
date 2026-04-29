@@ -5,12 +5,12 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "expense_categories",
+    tableName = "fuel_types",
     indices = [
         Index(value = ["name"], unique = true)
     ]
 )
-data class ExpenseCategoryEntity(
+data class FuelTypeEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 

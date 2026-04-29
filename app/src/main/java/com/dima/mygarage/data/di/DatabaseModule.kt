@@ -4,7 +4,10 @@ import android.content.Context
 import com.dima.mygarage.data.local.MyGarageDatabase
 import com.dima.mygarage.data.local.dao.CarDao
 import com.dima.mygarage.data.local.dao.ExpenseCategoryDao
-import com.dima.mygarage.data.local.dao.ExpensesDao
+import com.dima.mygarage.data.local.dao.ExpenseDao
+import com.dima.mygarage.data.local.dao.FuelRecordDao
+import com.dima.mygarage.data.local.dao.FuelTypeDao
+import com.dima.mygarage.data.local.dao.ServiceRecordDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,12 +33,27 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideExpensesDao(database: MyGarageDatabase): ExpensesDao {
-        return database.expensesDao()
+    fun provideExpenseDao(database: MyGarageDatabase): ExpenseDao {
+        return database.expenseDao()
     }
 
     @Provides
     fun provideExpenseCategoryDao(database: MyGarageDatabase): ExpenseCategoryDao {
         return database.expenseCategoryDao()
+    }
+
+    @Provides
+    fun provideFuelTypeDao(database: MyGarageDatabase): FuelTypeDao {
+        return database.fuelTypeDao()
+    }
+
+    @Provides
+    fun provideFuelRecordDao(database: MyGarageDatabase): FuelRecordDao {
+        return database.fuelRecordDao()
+    }
+
+    @Provides
+    fun provideServiceRecordDao(database: MyGarageDatabase): ServiceRecordDao {
+        return database.serviceRecordDao()
     }
 }
